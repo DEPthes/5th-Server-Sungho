@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${post.title}">게시글 상세</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f6fa; color: #333; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .card { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.08); padding: 32px; }
+        .post-title { font-size: 26px; font-weight: 700; color: #2c3e50; margin-bottom: 12px; }
+        .meta { font-size: 13px; color: #888; margin-bottom: 24px; }
+        .meta span { margin-right: 16px; }
+        .divider { border: none; border-top: 1px solid #e9ecef; margin-bottom: 24px; }
+        .content { font-size: 15px; line-height: 1.8; white-space: pre-wrap; min-height: 200px; }
+        .btn-row { display: flex; gap: 8px; margin-top: 32px; }
+        .btn { padding: 10px 20px; border-radius: 6px; font-size: 14px;
+               text-decoration: none; border: none; cursor: pointer; }
+        .btn-secondary { background: #ecf0f1; color: #555; }
+        .btn-secondary:hover { background: #dfe6e9; }
+        .btn-warning { background: #f39c12; color: #fff; }
+        .btn-warning:hover { background: #e67e22; }
+        .btn-danger { background: #e74c3c; color: #fff; }
+        .btn-danger:hover { background: #c0392b; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="post-title" th:text="${post.title}"></div>
+        <div class="meta">
+            <span>작성자: <strong th:text="${post.author}"></strong></span>
+            <span>작성일: <span th:text="${post.createdAt}"></span></span>
+            <span th:if="${post.updatedAt != post.createdAt}">수정일: <span th:text="${post.updatedAt}"></span></span>
+        </div>
+        <hr class="divider">
+        <div class="content" th:text="${post.content}"></div>
+
+        <div class="btn-row">
+            <a th:href="@{/posts}" class="btn btn-secondary">목록으로</a>
+            <a th:href="@{/posts/{id}/edit(id=${post.id})}" class="btn btn-warning">수정</a>
+            <form th:action="@{/posts/{id}/delete(id=${post.id})}" method="post"
+                  onsubmit="return confirm('정말 삭제하시겠습니까?')">
+                <button type="submit" class="btn btn-danger">삭제</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
