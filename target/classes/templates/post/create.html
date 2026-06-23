@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 작성</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f6fa; color: #333; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h1 { font-size: 26px; margin-bottom: 24px; color: #2c3e50; }
+        .card { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.08); padding: 32px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #555; }
+        input[type="text"], textarea {
+            width: 100%; padding: 10px 14px; border: 1px solid #ddd;
+            border-radius: 6px; font-size: 15px; font-family: inherit;
+            transition: border-color .2s;
+        }
+        input[type="text"]:focus, textarea:focus { outline: none; border-color: #3498db; }
+        textarea { height: 300px; resize: vertical; }
+        .error { color: #e74c3c; font-size: 13px; margin-top: 4px; }
+        .btn-row { display: flex; gap: 8px; margin-top: 24px; }
+        .btn { padding: 11px 24px; border-radius: 6px; font-size: 14px;
+               text-decoration: none; border: none; cursor: pointer; }
+        .btn-primary { background: #3498db; color: #fff; }
+        .btn-primary:hover { background: #2980b9; }
+        .btn-secondary { background: #ecf0f1; color: #555; }
+        .btn-secondary:hover { background: #dfe6e9; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>게시글 작성</h1>
+    <div class="card">
+        <form th:action="@{/posts}" method="post" th:object="${postRequestDto}">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력하세요">
+                <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+            </div>
+            <div class="form-group">
+                <label for="author">작성자</label>
+                <input type="text" id="author" th:field="*{author}" placeholder="이름을 입력하세요">
+                <div class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></div>
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea id="content" th:field="*{content}" placeholder="내용을 입력하세요"></textarea>
+                <div class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+            </div>
+            <div class="btn-row">
+                <button type="submit" class="btn btn-primary">등록</button>
+                <a th:href="@{/posts}" class="btn btn-secondary">취소</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
